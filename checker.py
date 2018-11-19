@@ -2,17 +2,18 @@ import requests
 import random
 from bs4 import BeautifulSoup
 import os
+import argparse
 
 
 class Checker:
 
-    def __init__(self):
+    def __init__(self, target):
         seed = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         sa = []
         for i in range(6):
             sa.append(random.choice(seed))
         user = ''.join(sa)
-        self.target = "http://192.168.64.2/secshop/"
+        self.target = target
         self.username = user
         self.password = 'taro'
         self.new = 'change'
@@ -84,7 +85,10 @@ class Checker:
 
 
 if __name__ == '__main__':
-    c = Checker()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--url', help='check url', default='http://127.0.0.1')
+    args = parser.parse_args()
+    c = Checker(args.url)
     c.register()
     c.login()
     c.change()
